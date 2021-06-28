@@ -290,7 +290,7 @@ public class MaHoaModuloActivity extends AppCompatActivity {
         long g, yA, r, s, var1, u1, u2, v, var3, var4;
         int HHH = hm;
         int var2, w;
-        if (xA < q && xA > 0 && h > 1 && h < p - 1 && modulo.power(h, (int) ((p - 1) / q), q) > 1 && modulo.isPrime(p) && modulo.isPrime(q) && (p - 1) % q == 0) {
+        if (xA < q && xA > 0 && h > 1 && h < p - 1 && modulo.power(h, (int) ((p - 1) / q), p) > 1 && modulo.isPrime(p) && modulo.isPrime(q) && (p - 1) % q == 0) {
             g = modulo.power(h, (p - 1) / q, p);
             yA = modulo.power((int) g, xA, p);
             var1 = modulo.power((int) g, k, p);
