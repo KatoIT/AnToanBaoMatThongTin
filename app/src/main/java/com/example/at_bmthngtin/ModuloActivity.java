@@ -12,11 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class ModuloActivity extends AppCompatActivity {
     private EditText editTextA, editTextM, editTextN;
     private TextView textViewBaiToan, textViewResult;
     private Button buttonKQ, buttonCls;
-    private String result = "", et1 = "a =", et2 = "m =", et3 = "n =";
+    private String result = "", et1 = "a", et2 = "m", et3 = "n";
+    private TextInputLayout textInputLayout1, textInputLayout2, textInputLayout3;
     public TinhModulo modulo = new TinhModulo();
     public Toast toast;
 
@@ -34,6 +37,9 @@ public class ModuloActivity extends AppCompatActivity {
         editTextN = (EditText) findViewById(R.id.editTextN);
         textViewBaiToan = (TextView) findViewById(R.id.textViewBaiToan2);
         textViewResult = (TextView) findViewById(R.id.textViewResult2);
+        textInputLayout1 = findViewById(R.id.textInputLayout1A);
+        textInputLayout2 = findViewById(R.id.textInputLayout2A);
+        textInputLayout3 = findViewById(R.id.textInputLayout3A);
 
         toast = Toast.makeText(ModuloActivity.this, "Không đủ dữ liệu tính toán", Toast.LENGTH_SHORT);
 
@@ -48,34 +54,30 @@ public class ModuloActivity extends AppCompatActivity {
             }
             case 1: {
                 textViewBaiToan.setText("Tính x = a^(-1) mod n");
-                editTextM.setEnabled(false);
-                et2 = "";
+                textInputLayout2.setVisibility(View.INVISIBLE);
                 break;
             }
             case 2: {
                 textViewBaiToan.setText("Tính Hàm Euler(Φ)");
-                editTextM.setEnabled(false);
-                editTextA.setEnabled(false);
-                et1 = "";
-                et2 = "";
+                textInputLayout1.setVisibility(View.GONE);
+                textInputLayout2.setVisibility(View.INVISIBLE);
                 break;
             }
             case 3: {
                 textViewBaiToan.setText("Số dư Trung Hoa\nVD:\na1 = 1, m1 = 3\na2 = 4, m2 = 1\na3 = 2, m3 = 9\ninput a  : 1-4-2\ninput m: 3-1-9");
                 et1 = "Số phương trình";
-                et2 = "M";
-                et3 = "A";
+                et2 = "m";
+                et3 = "a";
                 break;
             }
             case 4: {
                 textViewBaiToan.setText("Kiểm tra căn nguyên thủy");
-                editTextM.setEnabled(false);
-                et2 = "";
+                textInputLayout2.setVisibility(View.INVISIBLE);
                 break;
             }
             case 5: {
                 textViewBaiToan.setText("Logarithm rời rạc");
-                et2 = "b =";
+                et2 = "b";
                 break;
             }
             case 6: {
@@ -90,9 +92,9 @@ public class ModuloActivity extends AppCompatActivity {
         }
 
         // set textHint
-        editTextA.setHint(et1);
-        editTextM.setHint(et2);
-        editTextN.setHint(et3);
+        textInputLayout1.setHint(et1);
+        textInputLayout2.setHint(et2);
+        textInputLayout3.setHint(et3);
 
         // sự kiện click buttonKQ
         buttonKQ.setOnClickListener(new View.OnClickListener() {

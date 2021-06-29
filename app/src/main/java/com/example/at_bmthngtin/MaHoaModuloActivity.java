@@ -12,14 +12,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class MaHoaModuloActivity extends AppCompatActivity {
 
-    public EditText editTextNumber1, editTextNumber2, editTextNumber3, editTextNumber4, editTextNumber5;
-    public Button buttonSubmit3, buttonClean3;
-    public TextView textViewResult3, textViewBaiToan3, textView1, textView2, textView3, textView4, textView5;
-    public TinhModulo modulo = new TinhModulo();
-    public int val, number1, number2, number3, number4, number5, numberHm;
-    public Toast toast;
+    private EditText editTextNumber1, editTextNumber2, editTextNumber3, editTextNumber4, editTextNumber5;
+    private Button buttonSubmit3, buttonClean3;
+    private TextView textViewResult3, textViewBaiToan3;
+    private TextInputLayout textInputLayout1, textInputLayout2, textInputLayout3, textInputLayout4, textInputLayout5;
+    private TinhModulo modulo = new TinhModulo();
+    private int val, number1, number2, number3, number4, number5, numberHm;
+    private Toast toast;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -35,11 +38,11 @@ public class MaHoaModuloActivity extends AppCompatActivity {
         textViewBaiToan3 = findViewById(R.id.textViewBaiToan3);
         buttonSubmit3 = findViewById(R.id.buttonSubmit3);
         buttonClean3 = findViewById(R.id.buttonClean3);
-        textView1 = findViewById(R.id.textViewNumber1);
-        textView2 = findViewById(R.id.textViewNumber2);
-        textView3 = findViewById(R.id.textViewNumber3);
-        textView4 = findViewById(R.id.textViewNumber4);
-        textView5 = findViewById(R.id.textViewNumber5);
+        textInputLayout1 = findViewById(R.id.textInputLayout1);
+        textInputLayout2 = findViewById(R.id.textInputLayout2);
+        textInputLayout3 = findViewById(R.id.textInputLayout3);
+        textInputLayout4 = findViewById(R.id.textInputLayout4);
+        textInputLayout5 = findViewById(R.id.textInputLayout5);
         //
         textViewResult3.setMovementMethod(new ScrollingMovementMethod());
 
@@ -50,28 +53,43 @@ public class MaHoaModuloActivity extends AppCompatActivity {
         switch (val) {
             case 0: {
                 textViewBaiToan3.setText("Trao đổi khóa Diffie-Hellman\nq - là số nguyên tố\na - là Căn nguyên thủy của q\nChọn xA, xB\nyA = a^xA mod q\nyB = a^xB mod q\nKa = yB^xA mod q\nKb = yA^xB mod q");
-                editHintText("q = ", "a = ", "xA = ", "xB = ", "Null");
+                editHintText("q", "a", "xA", "xB", "Null");
                 break;
             }
             case 1: {
-                textViewBaiToan3.setText("Thuật toán RSA - Bài toán 1\np,q là 2 số nguyên tố khác nhau\nn = p*q\nChọn e (gcd(e,Φn) = 1; 1 < e < Φn)\nd = e^(-1) mod Φn\nPU = { e, n }\nPR = { d, n }\n Bản gốc: M < n\nDùng khóa Riêng để mã hóa(PR)  \nC = M^d mod n\nDùng khóa Chung để giải mã(PU)\nM = C^e mod n");
-                editHintText("p = ", "q = ", "e = ", "M = ", "Null");
+                textViewBaiToan3.setText("Thuật toán RSA - Bài toán 1\np,q là 2 số nguyên tố khác nhau\nn = p*q\nChọn e (gcd(e,Φn) = 1; 1 < e < Φn)\nd = e^(-1) mod Φn\nPU = { e, n }\nPR = { d, n }\nBản gốc: M < n\nDùng khóa Riêng để mã hóa(PR)  \nC = M^d mod n\nDùng khóa Chung để giải mã(PU)\nM = C^e mod n");
+                editHintText("p", "q", "e", "M", "Null");
 
                 break;
             }
             case 2: {
                 textViewBaiToan3.setText("Thuật toán RSA - Bài toán 2\np,q là 2 số nguyên tố khác nhau\nn = p*q\nChọn e (gcd(e,Φn) = 1; 1 < e < Φn)\nd = e^(-1) mod Φn\nPU = { e, n }\nPR = { d, n }\n Bản gốc: M < n\nDùng khóa Chung để mã hóa(PU)\nC = M^e mod n\nDùng khóa Riêng để giải mã(PR)  \nM = C^d mod n");
-                editHintText("p = ", "q = ", "e = ", "M = ", "Null");
+                editHintText("p", "q", "e", "M", "Null");
                 break;
             }
             case 3: {
                 textViewBaiToan3.setText("Mật mã ElGamal\nq - là số nguyên tố\na - là Căn nguyên thủy của q\nChọn xA < q-1\nyA = a^xA mod q\nPU = { q, a, yA}\n Bản gốc: M < q\n Mã hóa:\n Chọn k < q\n K = yA^k mod q\nC1 = a^k mod q\nC2 = K*M mod q\nGiải mã:\nK = C1^xA mod q\n M = (C2*K^(-1)) mod q");
-                editHintText("q = ", "a = ", "xA = ", "k = ", "M = ");
+                editHintText("q", "a", "xA", "k", "M");
                 break;
             }
             case 4: {
-                textViewBaiToan3.setText("Chữ ký điện tử DSA");
-                editHintText("p = ", "q = ", "h-H(M) = ", "xA = ", "k = ");
+                textViewBaiToan3.setText("Chữ ký điện tử DSA\n" +
+                        "p số nguyên tố" +
+                        "\nq là ước số nguyên tố của p-1" +
+                        "\nh là số nguyên 1 < h < (p-1) \n    sao cho g = h^((p-1)/q) mod p > 1" +
+                        "\n0 < x < q" +
+                        "\ny = g^x mod p" +
+                        "\n0 < k < q" +
+                        "\nr = (g^k mod p) mod q" +
+                        "\ns = [k^(-1) * (H(M) + x * r)] mod q" +
+                        "\nChữ ký số là (r, s)" +
+                        "\nTa có r' = r, s' = s, M' = M" +
+                        "\nw = (s')^-1 mod q" +
+                        "\nu1 = (H(M) * w) mod q" +
+                        "\nu2 = (r' * w) mod q" +
+                        "\nv = [(g^u1 * y^u2) mod p] mod q" +
+                        "\nKiểm tra nếu v = r' => Đúng");
+                editHintText("p", "q", "h-H(M)", "xA", "k");
                 break;
             }
             default:
@@ -79,8 +97,9 @@ public class MaHoaModuloActivity extends AppCompatActivity {
                 toast.show();
 
         }
-        editVisibilityTextView(false);
 
+        // set scroll cho text view
+        textViewBaiToan3.setMovementMethod(new ScrollingMovementMethod());
         // Click Button Clean
         buttonClean3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +137,6 @@ public class MaHoaModuloActivity extends AppCompatActivity {
                                 number3 = Integer.parseInt(edt3);
                             }
                         }
-                        editVisibilityTextView(true);
                         number1 = Integer.parseInt(edt1);
                         number2 = Integer.parseInt(edt2);
                         number4 = Integer.parseInt(edt4);
@@ -159,7 +177,6 @@ public class MaHoaModuloActivity extends AppCompatActivity {
     }
 
     public void Clean() {
-        editVisibilityTextView(false);
         editTextNumber1.setText("");
         editTextNumber1.requestFocus();
         editTextNumber2.setText("");
@@ -168,43 +185,17 @@ public class MaHoaModuloActivity extends AppCompatActivity {
         editTextNumber5.setText("");
     }
 
-    public void editVisibilityTextView(Boolean isVisibility) {
-        if (isVisibility) {
-            textView1.setVisibility(View.VISIBLE);
-            textView2.setVisibility(View.VISIBLE);
-            textView3.setVisibility(View.VISIBLE);
-            textView4.setVisibility(View.VISIBLE);
-        } else {
-            textView1.setVisibility(View.GONE);
-            textView2.setVisibility(View.GONE);
-            textView3.setVisibility(View.GONE);
-            textView4.setVisibility(View.GONE);
-        }
-        if ((val == 3 || val == 4) && isVisibility) {
-            textView5.setVisibility(View.VISIBLE);
-        } else {
-            textView5.setVisibility(View.GONE);
-        }
-
-    }
 
     public void editHintText(String ed1, String ed2, String ed3, String ed4, String ed5) {
-        editTextNumber1.setHint(ed1);
-        editTextNumber2.setHint(ed2);
-        editTextNumber3.setHint(ed3);
-        editTextNumber4.setHint(ed4);
-        editTextNumber5.setHint(ed5);
-        textView1.setText(ed1);
-        textView2.setText(ed2);
-        textView3.setText(ed3);
-        textView4.setText(ed4);
-        textView5.setText(ed5);
-
+        textInputLayout1.setHint(ed1);
+        textInputLayout2.setHint(ed2);
+        textInputLayout3.setHint(ed3);
+        textInputLayout4.setHint(ed4);
+        textInputLayout5.setHint(ed5);
         if (ed5.equals("Null")) {
-            editTextNumber5.setVisibility(View.GONE);
-            textView5.setVisibility(View.GONE);
+            textInputLayout5.setVisibility(View.INVISIBLE);
         } else {
-            editTextNumber5.setVisibility(View.VISIBLE);
+            textInputLayout5.setVisibility(View.VISIBLE);
         }
 
     }
@@ -288,23 +279,30 @@ public class MaHoaModuloActivity extends AppCompatActivity {
 
     private String ChuKyDienTu(int p, int q, int h, int xA, int k, int hm) {
         long g, yA, r, s, var1, u1, u2, v, var3, var4;
-        int HHH = hm;
+        String result3 = "\nv = r' => Đúng";
         int var2, w;
-        if (xA < q && xA > 0 && h > 1 && h < p - 1 && modulo.power(h, (int) ((p - 1) / q), q) > 1 && modulo.isPrime(p) && modulo.isPrime(q) && (p - 1) % q == 0) {
-            g = modulo.power(h, (p - 1) / q, p);
-            yA = modulo.power((int) g, xA, p);
-            var1 = modulo.power((int) g, k, p);
-            r = modulo.power((int) var1, 1, q);
-            var2 = modulo.modulo_inverse(k, q);
-            s = modulo.power((int) (var2 * (HHH + xA * r)), 1, q); // Chú ý HHH
-            w = modulo.modulo_inverse((int) s, q);
-            u1 = modulo.power((int) (HHH * w), 1, q); // Chú ý HHH
-            u2 = modulo.power((int) (r * w), 1, q);
-            var3 = modulo.power((int) g, (int) u1, p);
-            var4 = modulo.power((int) yA, (int) u2, p);
+        if (xA < q && xA > 0 && h > 1 && h < p - 1 && modulo.power(h, (int) ((p - 1) / q), p) > 1 && modulo.isPrime(p) && modulo.isPrime(q) && (p - 1) % q == 0) {
+            g = modulo.power(h, (p - 1) / q, p); // g = h^((p-1))/q) mod p
+            yA = modulo.power((int) g, xA, p); // y = g^x mod p
+            var1 = modulo.power((int) g, k, p); // = g^k mod p
+            r = modulo.power((int) var1, 1, q); // r = (g^k mod p) mod q
+            var2 = modulo.modulo_inverse(k, q); // = k^-1 mod q
+            s = modulo.power((int) (var2 * (hm + xA * r)), 1, q);  // s = [k^-1 (H(M) + xA * r)] mod q
+            /*
+             *  Chú ý: phần xác minh sẽ lấy các giá trị s' = s, M' = M, r' = r
+             * */
+            w = modulo.modulo_inverse((int) s, q); // w = (s')^-1 mod q
+            u1 = modulo.power((hm * w), 1, q); // u1 = (H(M) * w) mod q
+            u2 = modulo.power((int) (r * w), 1, q); // u2 = (r' * w) mod q
+            var3 = modulo.power((int) g, (int) u1, p); // = g^u1 mod p
+            var4 = modulo.power((int) yA, (int) u2, p); // = y^u2 mod p
+            v = modulo.power((int) (var3 * var4), 1, q); // [(g^u1 * y^u2) mod p] mod q
 
-            v = modulo.power((int) (var3 * var4), 1, q);
-            return "v =  " + v + "\nr = " + r + "\ns = " + s + "\nyA = " + yA + "\nu1 = " + u1 + "\nu2 = " + u2 + "\nw = " + w + "\ng = " + g +"g^k mod p " + var1 + "k^-1 mod q " + var2 + " " + var3 + " " + var4;
+//            return "v =  " + v + "\nr = " + r + "\ns = " + s + "\nyA = " + yA + "\nu1 = " + u1 + "\nu2 = " + u2 + "\nw = " + w + "\ng = " + g +"\ng^k mod p = " + var1 + "\nk^-1 mod q = " + var2 + "\n" + var3 + "\n" + var4;
+            if (v != r) {
+                result3 = "\nv != r' => Sai";
+            }
+            return "g = " + g + "\ny = " + yA + "\ng^k mod p = " + var1 + "\nk^-1 mod q = " + var2 + "\nr = " + r + ", s = " + s + "\nw = " + w + "\nu1 = " + u1 + ", u2 = " + u2 + "\ng^u1 mod p = " + var3 + "\ny^u2 mod p = " + var4 + "\nv = " + v + result3;
         } else {
             return "Dữ liệu vào không chính xác!";
         }

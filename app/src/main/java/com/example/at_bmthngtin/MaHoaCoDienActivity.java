@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -45,6 +46,7 @@ public class MaHoaCoDienActivity extends AppCompatActivity {
         switch (valueList) {
             case 0: {
                 textViewBaiToan.setText("Mật mã CAESAR");
+                editTextInputK.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
             }
             case 1: {
@@ -65,6 +67,7 @@ public class MaHoaCoDienActivity extends AppCompatActivity {
             }
             case 5: {
                 textViewBaiToan.setText("Mật mã Hoán Vị");
+                editTextInputK.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
             }
             default:
@@ -80,56 +83,60 @@ public class MaHoaCoDienActivity extends AppCompatActivity {
         buttonKQ1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (editTextInputM.getText().toString().length() > 0 && editTextInputK.getText().toString().length() > 0) {
+                    ipM = editTextInputM.getText().toString().trim().toUpperCase();
+                    ipK = editTextInputK.getText().toString().trim().toUpperCase();
+                    editTextInputK.setText(ipK);
+                    editTextInputM.setText(ipM);
+                    switch (valueList) {
+                        case 0: {
+                            if (switchGiaiMa.isChecked()) {
+                                textViewResult1.setText(caesarGM());
+                            } else {
+                                textViewResult1.setText(caesar());
+                            }
+                            break;
+                        }
+                        case 1: {
+                            if (switchGiaiMa.isChecked()) {
+                                textViewResult1.setText(videnereLKGM());
+                            } else {
+                                textViewResult1.setText(videnereLK());
+                            }
+                            break;
+                        }
+                        case 2: {
+                            if (switchGiaiMa.isChecked()) {
+                                textViewResult1.setText(videnereAutoKGM());
+                            } else {
+                                textViewResult1.setText(videnereAutoK());
+                            }
+                            break;
+                        }
+                        case 3: {
+                            if (switchGiaiMa.isChecked()) {
+                                textViewResult1.setText(maHoaChuDonGM());
+                            } else {
+                                textViewResult1.setText(maHoaChuDon());
+                            }
+                            break;
+                        }
+                        case 4: {
+                            textViewResult1.setText(Playfair());
+                            textViewBaiToan.setText("Mật mã ma trận khóa PLAYFAIR\n" + maTranKhoa);
 
-                ipM = editTextInputM.getText().toString().trim().toUpperCase();
-                ipK = editTextInputK.getText().toString().trim().toUpperCase();
-                editTextInputK.setText(ipK);
-                switch (valueList) {
-                    case 0: {
-                        if (switchGiaiMa.isChecked()) {
-                            textViewResult1.setText(caesarGM());
-                        } else {
-                            textViewResult1.setText(caesar());
+                            break;
                         }
-                        break;
-                    }
-                    case 1: {
-                        if (switchGiaiMa.isChecked()) {
-                            textViewResult1.setText(videnereLKGM());
-                        } else {
-                            textViewResult1.setText(videnereLK());
+                        case 5: {
+                            textViewResult1.setText(maHoaHoanVi());
+                            break;
                         }
-                        break;
-                    }
-                    case 2: {
-                        if (switchGiaiMa.isChecked()) {
-                            textViewResult1.setText(videnereAutoKGM());
-                        } else {
-                            textViewResult1.setText(videnereAutoK());
-                        }
-                        break;
-                    }
-                    case 3: {
-                        if (switchGiaiMa.isChecked()) {
-                            textViewResult1.setText(maHoaChuDonGM());
-                        } else {
-                            textViewResult1.setText(maHoaChuDon());
-                        }
-                        break;
-                    }
-                    case 4: {
-                        textViewResult1.setText(Playfair());
-                        textViewBaiToan.setText("Mật mã ma trận khóa PLAYFAIR\n" + maTranKhoa);
+                        default:
+                            Toast.makeText(MaHoaCoDienActivity.this, "Chưa có!!!" + valueList, Toast.LENGTH_SHORT).show();
 
-                        break;
                     }
-                    case 5: {
-                        textViewResult1.setText(maHoaHoanVi());
-                        break;
-                    }
-                    default:
-                        Toast.makeText(MaHoaCoDienActivity.this, "Chưa có!!!" + valueList, Toast.LENGTH_SHORT).show();
-
+                }else {
+                    Toast.makeText(MaHoaCoDienActivity.this, "Vui lòng nhập vào dữ liệu tính toán" + valueList, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -275,7 +282,7 @@ public class MaHoaCoDienActivity extends AppCompatActivity {
         }
         // in ma tran Khóa
         for (int i = 0; i < 25; i++) {
-            if ((i+1) % 5 == 0) {
+            if ((i + 1) % 5 == 0) {
                 maTranKhoa += String.valueOf((char) (int) arrayList.get(i)) + "\n";
             } else {
                 maTranKhoa += String.valueOf((char) (int) arrayList.get(i)) + " | ";
@@ -373,7 +380,7 @@ public class MaHoaCoDienActivity extends AppCompatActivity {
         }
         // in ma tran Khóa
         for (int i = 0; i < 25; i++) {
-            if ((i+1) % 5 == 0) {
+            if ((i + 1) % 5 == 0) {
                 maTranKhoa += String.valueOf((char) (int) arrayList.get(i)) + "\n";
             } else {
                 maTranKhoa += String.valueOf((char) (int) arrayList.get(i)) + " | ";
@@ -448,7 +455,6 @@ public class MaHoaCoDienActivity extends AppCompatActivity {
 
         return str;
     }
-
 
 
 }
