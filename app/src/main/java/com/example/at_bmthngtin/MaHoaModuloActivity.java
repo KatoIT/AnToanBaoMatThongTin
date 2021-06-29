@@ -282,6 +282,7 @@ public class MaHoaModuloActivity extends AppCompatActivity {
         String result3 = "\nv = r' => Đúng";
         int var2, w;
         if (xA < q && xA > 0 && h > 1 && h < p - 1 && modulo.power(h, (int) ((p - 1) / q), p) > 1 && modulo.isPrime(p) && modulo.isPrime(q) && (p - 1) % q == 0) {
+<<<<<<< HEAD
             g = modulo.power(h, (p - 1) / q, p); // g = h^((p-1))/q) mod p
             yA = modulo.power((int) g, xA, p); // y = g^x mod p
             var1 = modulo.power((int) g, k, p); // = g^k mod p
@@ -297,6 +298,19 @@ public class MaHoaModuloActivity extends AppCompatActivity {
             var3 = modulo.power((int) g, (int) u1, p); // = g^u1 mod p
             var4 = modulo.power((int) yA, (int) u2, p); // = y^u2 mod p
             v = modulo.power((int) (var3 * var4), 1, q); // [(g^u1 * y^u2) mod p] mod q
+=======
+            g = modulo.power(h, (p - 1) / q, p);
+            yA = modulo.power((int) g, xA, p);
+            var1 = modulo.power((int) g, k, p);
+            r = modulo.power((int) var1, 1, q);
+            var2 = modulo.modulo_inverse(k, q);
+            s = modulo.power((int) (var2 * (HHH + xA * r)), 1, q); // Chú ý HHH
+            w = modulo.modulo_inverse((int) s, q);
+            u1 = modulo.power((int) (HHH * w), 1, q); // Chú ý HHH
+            u2 = modulo.power((int) (r * w), 1, q);
+            var3 = modulo.power((int) g, (int) u1, p);
+            var4 = modulo.power((int) yA, (int) u2, p);
+>>>>>>> 5f30655e37573db3d1ca9eaf39ed30393b4c14df
 
 //            return "v =  " + v + "\nr = " + r + "\ns = " + s + "\nyA = " + yA + "\nu1 = " + u1 + "\nu2 = " + u2 + "\nw = " + w + "\ng = " + g +"\ng^k mod p = " + var1 + "\nk^-1 mod q = " + var2 + "\n" + var3 + "\n" + var4;
             if (v != r) {
