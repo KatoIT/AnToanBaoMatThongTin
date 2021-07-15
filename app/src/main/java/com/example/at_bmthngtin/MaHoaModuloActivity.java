@@ -280,7 +280,7 @@ public class MaHoaModuloActivity extends AppCompatActivity {
     private String ChuKyDienTu(int p, int q, int h, int xA, int k, int hm) {
         long g, yA, r, s, var1, u1, u2, v, var3, var4;
         String result3 = "\nv = r' => Đúng";
-        int var2, w;
+        int var2, w, var5;
         if (xA < q && xA > 0 && h > 1 && h < p - 1 && modulo.power(h, (int) ((p - 1) / q), p) > 1 && modulo.isPrime(p) && modulo.isPrime(q) && (p - 1) % q == 0) {
             g = modulo.power(h, (p - 1) / q, p); // g = h^((p-1))/q) mod p
             yA = modulo.power((int) g, xA, p); // y = g^x mod p
@@ -296,7 +296,8 @@ public class MaHoaModuloActivity extends AppCompatActivity {
             u2 = modulo.power((int) (r * w), 1, q); // u2 = (r' * w) mod q
             var3 = modulo.power((int) g, (int) u1, p); // = g^u1 mod p
             var4 = modulo.power((int) yA, (int) u2, p); // = y^u2 mod p
-            v = modulo.power((int) (var3 * var4), 1, q); // [(g^u1 * y^u2) mod p] mod q
+            var5 = modulo.power((int) (var3 * var4), 1, p); // [(g^u1 * y^u2) mod p] mod q
+            v = modulo.power(var5, 1, q); // [(g^u1 * y^u2) mod p] mod q
             if (v != r) {
                 result3 = "\nv != r' => Sai";
             }
